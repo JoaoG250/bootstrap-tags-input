@@ -1,26 +1,24 @@
 class BootstrapTagsInput {
-  onTagAdded = () => {};
-  onTagRemoved = () => {};
-  tags = [];
-  rootElementId;
-  rootElement;
+  onTagAdded: (tag: string) => void = () => {};
+  onTagRemoved: (tag: string) => void = () => {};
+  tags: string[] = [];
+  rootElementId: string;
+  rootElement: HTMLElement;
   rootElementClass;
-  inputId;
-  inputElement;
+  inputId: string;
+  inputElement: HTMLInputElement;
   inputElementClass;
-  tagClass;
+  tagClass: string;
 
   /**
-   * Initializes an instance of the BootstrapTagsInput class.
-   * @param {Object} [options]
-   * @param {function(string): void} [options.onTagAdded] A callback to call when a tag is added.
-   *     The callback will receive the added tag as a parameter.
-   * @param {function(string): void} [options.onTagRemoved] A callback to call when a tag is removed.
-   *     The callback will receive the removed tag as a parameter.
-   * @param {Array<string>} [options.initialTags] An array of initial tags to show in the input element.
-   * @param {string} [options.rootElementClass] A string of classes to add to the root element.
-   * @param {string} [options.inputElementClass] A string of classes to add to the input element.
-   * @param {string} [options.tagClass] A string of classes to add to each tag element.
+   * Initializes a new instance of the BootstrapTagsInput class.
+   * The options object contains the following properties:
+   * - onTagAdded: The function to call when a tag is added. The function receives the added tag as a string argument.
+   * - onTagRemoved: The function to call when a tag is removed. The function receives the removed tag as a string argument.
+   * - initialTags: The initial tags to display in the input element.
+   * - rootElementClass: The CSS class to apply to the root element.
+   * - inputElementClass: The CSS class to apply to the input element.
+   * - tagClass: The CSS class to apply to each tag element.
    */
   constructor({
     onTagAdded = () => {},
@@ -63,33 +61,40 @@ class BootstrapTagsInput {
   }
 
   /**
-   * Renders the root element for the Bootstrap tags input.
+   * Renders the root element of the Bootstrap tags input.
+   * The root element is the outermost element that contains the input element and the tag elements.
+   * The root element is assigned an ID in the format "bootstrap-tags-input-<idSuffix>".
+   * The root element is also assigned a CSS class "bootstrap-tags-input" and any additional classes specified in the options object.
    * @param {string} idSuffix A string to append to the end of the root element's ID.
-   * @returns {HTMLElement} The root element.
+   * @returns {HTMLDivElement} The rendered root element.
    */
-  renderRootElement(idSuffix) {
+  renderRootElement(idSuffix: string): HTMLDivElement {
     return this.renderElementFromString(`
       <div id="bootstrap-tags-input-${idSuffix}" class="bootstrap-tags-input ${this.rootElementClass}"></div>
     `);
   }
 
   /**
-   * Renders an HTML element from a string.
-   * @param {string} htmlString An HTML string to render into an element.
-   * @returns {HTMLElement} The rendered HTML element.
+   * Parses an HTML string and returns the first element as a specified HTMLElement type.
+   * @template T - The type of HTMLElement to return.
+   * @param {string} htmlString - The HTML string to parse.
+   * @returns {T} The first HTML element parsed from the string.
    */
-  renderElementFromString(htmlString) {
+  renderElementFromString<T extends HTMLElement>(htmlString: string): T {
     const parser = new DOMParser();
     const doc = parser.parseFromString(htmlString, "text/html");
-    return doc.body.firstChild;
+    return doc.body.firstElementChild as T;
   }
 
   /**
-   * Renders an input HTML element with a unique ID.
+   * Renders the input element of the Bootstrap tags input.
+   * The input element is the text input where the user enters tags.
+   * The input element is assigned an ID in the format "bootstrap-tag-input-<idSuffix>".
+   * The input element is also assigned a CSS class "bootstrap-tag-input" and any additional classes specified in the options object.
    * @param {string} idSuffix A string to append to the end of the input element's ID.
-   * @returns {HTMLElement} The rendered input element.
+   * @returns {HTMLInputElement} The rendered input element.
    */
-  renderInput(idSuffix) {
+  renderInput(idSuffix: string): HTMLInputElement {
     return this.renderElementFromString(`
       <input id="bootstrap-tag-input-${idSuffix}" type="text" class="${this.inputElementClass}">
     `);
@@ -137,7 +142,7 @@ class BootstrapTagsInput {
    * Adds a tag element to the Bootstrap tags input.
    * @param {HTMLElement} tagElement The tag element to add.
    */
-  addTag(tagElement) {
+  addTag(tagElement: HTMLElement) {
     this.rootElement.insertBefore(tagElement, this.inputElement);
   }
 
@@ -146,7 +151,7 @@ class BootstrapTagsInput {
    * @param {string} text The text content of the tag element.
    * @returns {HTMLElement} The rendered tag element.
    */
-  renderTag(text) {
+  renderTag(text: string) {
     const tagElement = document.createElement("span");
     tagElement.className = `bootstrap-tag ${this.tagClass}`;
     tagElement.textContent = text;
@@ -175,4 +180,4 @@ class BootstrapTagsInput {
   }
 }
 
-window.BootstrapTagsInput = BootstrapTagsInput;
+export default BootstrapTagsInput;

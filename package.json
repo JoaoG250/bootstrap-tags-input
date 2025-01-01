@@ -1,0 +1,32 @@
+{
+  "name": "bootstrap-tags-input",
+  "description": "Tags input component made with plain JavaScript for Bootstrap 5",
+  "version": "0.1.0",
+  "author": "João Rodrigues",
+  "license": "MIT",
+  "type": "module",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "main": "dist/bootstrap-tags-input.umd.js",
+  "module": "dist/bootstrap-tags-input.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/bootstrap-tags-input.es.js",
+      "require": "./dist/bootstrap-tags-input.umd.js"
+    },
+    "./style.css": "./dist/bootstrap-tags-input.css"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "sass": "^1.83.0",
+    "typescript": "~5.6.2",
+    "vite": "^6.0.5"
+  }
+}

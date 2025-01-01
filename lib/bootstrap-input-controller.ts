@@ -1,17 +1,17 @@
 class BootstrapInputController {
-  inputElement;
+  inputElement: HTMLInputElement;
 
   /**
    * Initializes an instance of the InputController class.
    * @param {HTMLInputElement} inputElement The input element to control.
    */
-  constructor(inputElement) {
+  constructor(inputElement: HTMLInputElement) {
     this.inputElement = inputElement;
   }
 
   /**
    * Retrieves the tags from the input element.
-   * @returns {Array<string>} An array of tags split by commas, or an empty array if no tags are present.
+   * @returns {string[]} An array of tags split by commas, or an empty array if no tags are present.
    */
   getTags() {
     if (this.inputElement.value) {
@@ -22,9 +22,9 @@ class BootstrapInputController {
 
   /**
    * Sets the tags in the input element.
-   * @param {Array<string>} tags An array of tags to set.
+   * @param {string[]} tags An array of tags to set.
    */
-  setTags(tags) {
+  setTags(tags: string[]) {
     this.inputElement.value = tags.join(",");
   }
 
@@ -33,7 +33,7 @@ class BootstrapInputController {
    * adds the provided tag to the array, and sets the tags in the input element.
    * @param {string} tag The tag to add.
    */
-  addTag(tag) {
+  addTag(tag: string) {
     const tags = this.getTags();
     tags.push(tag);
     this.setTags(tags);
@@ -44,10 +44,10 @@ class BootstrapInputController {
    * filters out the provided tag from the array, and sets the tags in the input element.
    * @param {string} tag The tag to remove.
    */
-  removeTag(tag) {
+  removeTag(tag: string) {
     const tags = this.getTags();
     this.setTags(tags.filter((t) => t !== tag));
   }
 }
 
-window.BootstrapInputController = BootstrapInputController;
+export default BootstrapInputController;
