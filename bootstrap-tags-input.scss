@@ -1,0 +1,34 @@
+.bootstrap-tags-input {
+  width: 100%;
+  padding: 5px;
+  margin: 0.5rem 0;
+  border: 1px solid #dee2e6;
+  border-radius: 5px;
+  cursor: text;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+  &:has(input:focus) {
+    border-color: #86b7fe;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+  }
+
+  input {
+    border: none;
+    &:focus-visible {
+      outline: none;
+    }
+  }
+
+  .bootstrap-tag {
+    margin-right: 5px;
+
+    .bootstrap-tag-remove-btn {
+      cursor: pointer;
+      margin-left: 8px;
+
+      &::after {
+        content: "x";
+      }
+    }
+  }
+}
