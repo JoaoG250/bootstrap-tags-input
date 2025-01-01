@@ -14,7 +14,7 @@ The demo is available [here](https://joaog250.github.io/bootstrap-tags-input/ind
 ```
 1. add the javascript to your html page:
 ```html
-    <script src="https://cdn.jsdelivr.net/gh/JoaoG250/bootstrap-tags-input@main/dist/bootstrap-tags-input.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/JoaoG250/bootstrap-tags-input@main/dist/bootstrap-tags-input.umd.js"></script>
 ```
 
 ## Usage
