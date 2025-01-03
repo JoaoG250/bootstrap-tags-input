@@ -1,5 +1,5 @@
 class BootstrapInputController {
-  inputElement: HTMLInputElement;
+  readonly inputElement: HTMLInputElement;
 
   /**
    * Initializes an instance of the InputController class.

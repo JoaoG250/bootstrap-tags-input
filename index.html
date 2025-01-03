@@ -40,6 +40,10 @@
       onTagRemoved: (tag) => {
         inputController1.removeTag(tag);
       },
+      initialTags: inputController1.getTags(),
+      rootElementHtmlOptions: { id: 'tags-wrapper-custom-id-1', class: 'tags-wrapper-custom-class' },
+      inputElementHtmlOptions: { id: 'input-element-custom-id-1', class: 'input-element-custom-class', placeholder: 'Add a tag...' },
+      tagElementHtmlOptions: { class: 'tag-element-custom-class' },
     });
     document.getElementById("tags-input-wrapper-1").appendChild(bootstrapTagsInput1.rootElement);
 
@@ -52,6 +56,9 @@
         inputController2.removeTag(tag);
       },
       initialTags: inputController2.getTags(),
+      rootElementHtmlOptions: { id: 'tags-wrapper-custom-id-2', class: 'tags-wrapper-custom-class' },
+      inputElementHtmlOptions: { id: 'input-element-custom-id-2', class: 'input-element-custom-class', placeholder: 'Add a tag...' },
+      tagElementHtmlOptions: { class: 'tag-element-custom-class' },
     });
     document.getElementById("tags-input-wrapper-2").appendChild(bootstrapTagsInput2.rootElement);
   </script>

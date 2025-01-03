@@ -1,16 +1,16 @@
-var d = Object.defineProperty;
-var l = (i, t, e) => t in i ? d(i, t, { enumerable: !0, configurable: !0, writable: !0, value: e }) : i[t] = e;
-var s = (i, t, e) => l(i, typeof t != "symbol" ? t + "" : t, e);
-class h {
+var r = Object.defineProperty;
+var m = (i, t, e) => t in i ? r(i, t, { enumerable: !0, configurable: !0, writable: !0, value: e }) : i[t] = e;
+var s = (i, t, e) => m(i, typeof t != "symbol" ? t + "" : t, e);
+class d {
   /**
    * Initializes a new instance of the BootstrapTagsInput class.
    * The options object contains the following properties:
    * - onTagAdded: The function to call when a tag is added. The function receives the added tag as a string argument.
    * - onTagRemoved: The function to call when a tag is removed. The function receives the removed tag as a string argument.
    * - initialTags: The initial tags to display in the input element.
-   * - rootElementClass: The CSS class to apply to the root element.
-   * - inputElementClass: The CSS class to apply to the input element.
-   * - tagClass: The CSS class to apply to each tag element.
+   * - rootElementHtmlOptions: The options for the root element.
+   * - inputElementHtmlOptions: The options for the input element.
+   * - tagElementHtmlOptions: The options for each tag element.
    */
   constructor({
     onTagAdded: t = () => {
@@ -18,23 +18,19 @@ class h {
     onTagRemoved: e = () => {
     },
     initialTags: n = [],
-    rootElementClass: r = "",
-    inputElementClass: a = "",
-    tagClass: o = "badge text-bg-secondary"
+    rootElementHtmlOptions: o = {},
+    inputElementHtmlOptions: a = {},
+    tagElementHtmlOptions: l = {}
   }) {
-    s(this, "onTagAdded", () => {
-    });
-    s(this, "onTagRemoved", () => {
-    });
-    s(this, "tags", []);
-    s(this, "rootElementId");
+    s(this, "tags");
     s(this, "rootElement");
-    s(this, "rootElementClass");
-    s(this, "inputId");
     s(this, "inputElement");
-    s(this, "inputElementClass");
-    s(this, "tagClass");
-    this.onTagAdded = t, this.onTagRemoved = e, this.tags = n, this.rootElementClass = r, this.inputElementClass = a, this.tagClass = o, this.rootElementId = this.generateUniqueId(), this.rootElement = this.renderRootElement(this.rootElementId), this.inputId = this.generateUniqueId(), this.inputElement = this.renderInput(this.inputId), this.rootElement.appendChild(this.inputElement), this.addEnventListeners(), this.renderInitialTags();
+    s(this, "onTagAdded");
+    s(this, "onTagRemoved");
+    s(this, "rootElementHtmlOptions");
+    s(this, "inputElementHtmlOptions");
+    s(this, "tagElementHtmlOptions");
+    this.onTagAdded = t, this.onTagRemoved = e, this.tags = n, this.rootElementHtmlOptions = o, this.inputElementHtmlOptions = a, this.tagElementHtmlOptions = l, this.rootElement = this.renderRootElement(), this.inputElement = this.renderInputElement(), this.rootElement.appendChild(this.inputElement), this.addEnventListeners(), this.renderInitialTags();
   }
   /**
    * Generates a random, URL-safe, unique identifier.
@@ -42,46 +38,33 @@ class h {
    * @returns {string} A random, URL-safe, unique identifier.
    */
   generateUniqueId(t = 8) {
-    const e = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789", n = e.length, r = new Uint8Array(t);
-    return window.crypto.getRandomValues(r), Array.from(
-      r,
+    const e = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789", n = e.length, o = new Uint8Array(t);
+    return window.crypto.getRandomValues(o), Array.from(
+      o,
       (a) => e[a % n]
     ).join("");
   }
   /**
    * Renders the root element of the Bootstrap tags input.
    * The root element is the outermost element that contains the input element and the tag elements.
-   * The root element is assigned an ID in the format "bootstrap-tags-input-<idSuffix>".
+   * The root element is assigned an ID in the format "bootstrap-tags-input-<uniqueId>".
    * The root element is also assigned a CSS class "bootstrap-tags-input" and any additional classes specified in the options object.
-   * @param {string} idSuffix A string to append to the end of the root element's ID.
    * @returns {HTMLDivElement} The rendered root element.
    */
-  renderRootElement(t) {
-    return this.renderElementFromString(`
-      <div id="bootstrap-tags-input-${t}" class="bootstrap-tags-input ${this.rootElementClass}"></div>
-    `);
-  }
-  /**
-   * Parses an HTML string and returns the first element as a specified HTMLElement type.
-   * @template T - The type of HTMLElement to return.
-   * @param {string} htmlString - The HTML string to parse.
-   * @returns {T} The first HTML element parsed from the string.
-   */
-  renderElementFromString(t) {
-    return new DOMParser().parseFromString(t, "text/html").body.firstElementChild;
+  renderRootElement() {
+    const t = document.createElement("div");
+    return t.id = this.rootElementHtmlOptions.id || `bootstrap-tags-input-${this.generateUniqueId()}`, t.className = `bootstrap-tags-input ${this.rootElementHtmlOptions.class}`, t;
   }
   /**
    * Renders the input element of the Bootstrap tags input.
    * The input element is the text input where the user enters tags.
-   * The input element is assigned an ID in the format "bootstrap-tag-input-<idSuffix>".
-   * The input element is also assigned a CSS class "bootstrap-tag-input" and any additional classes specified in the options object.
-   * @param {string} idSuffix A string to append to the end of the input element's ID.
+   * The input element is assigned an ID in the format "bootstrap-tag-input-<uniqueId>".
+   * The input element is also assigned any additional classes specified in the options object.
    * @returns {HTMLInputElement} The rendered input element.
    */
-  renderInput(t) {
-    return this.renderElementFromString(`
-      <input id="bootstrap-tag-input-${t}" type="text" class="${this.inputElementClass}">
-    `);
+  renderInputElement() {
+    const t = document.createElement("input");
+    return t.id = this.inputElementHtmlOptions.id || `bootstrap-tag-input-${this.generateUniqueId()}`, this.inputElementHtmlOptions.class && (t.className = this.inputElementHtmlOptions.class), this.inputElementHtmlOptions.placeholder && (t.placeholder = this.inputElementHtmlOptions.placeholder), t;
   }
   /**
    * Adds event listeners to the rendered elements. This method is called by the constructor.
@@ -130,10 +113,10 @@ class h {
    */
   renderTag(t) {
     const e = document.createElement("span");
-    e.className = `bootstrap-tag ${this.tagClass}`, e.textContent = t;
+    e.className = `bootstrap-tag badge text-bg-secondary ${this.tagElementHtmlOptions.class}`, e.textContent = t;
     const n = document.createElement("span");
     return n.classList.add("bootstrap-tag-remove-btn"), n.onclick = () => {
-      this.tags = this.tags.filter((r) => r !== t), this.onTagRemoved(t), e.remove();
+      this.tags = this.tags.filter((o) => o !== t), this.onTagRemoved(t), e.remove();
     }, e.appendChild(n), e;
   }
   /**
@@ -147,7 +130,7 @@ class h {
     });
   }
 }
-class g {
+class p {
   /**
    * Initializes an instance of the InputController class.
    * @param {HTMLInputElement} inputElement The input element to control.
@@ -189,5 +172,5 @@ class g {
     this.setTags(e.filter((n) => n !== t));
   }
 }
-window.BootstrapTagsInput = h;
-window.BootstrapInputController = g;
+window.BootstrapTagsInput = d;
+window.BootstrapInputController = p;
